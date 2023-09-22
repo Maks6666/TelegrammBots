@@ -20,7 +20,7 @@ user_id = None
 # print(f"Полный путь к изображению: {image_path}")
 
 
-bot = telebot.TeleBot('6542413942:AAEBvczPrvhb9nf4WPHZv2MGz3LNJ2tAWzY')
+bot = telebot.TeleBot('{here is a place for bot personal token}')
 # old API
 # API = '3d9de74844d28377e81415151cbe6a66'
 # New one
