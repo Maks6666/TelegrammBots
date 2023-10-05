@@ -10,7 +10,7 @@ import os
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot('6409023209:AAE07CHYdHEczafUumAhnkMxjNkZyWvr0Sw')
+bot = Bot('BOT_TOKEN')
 
 dp = Dispatcher(bot)
 
