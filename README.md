@@ -7,4 +7,9 @@
 <p>- Grammar bot (created by aiogram): Input some sentences and bot will return part of speech of every word of that senteces. </p>
 
 <strong>Every bot contains own database (by SQLite3) to make visible history of user queries. </strong>
-
+<p>To check how each of them works: </p>
+<p>1. Install Telegramm or sign in into <a href="https://web.telegram.org/">web version</a> </p>
+<p>2. Create your own bot by Bot Father (official bot to create other bots). </p>
+<p>3. Get your bot token be command "/token". </p>
+<p>4. Replace string "BOT_TOKEN" by your personal token. </p>
+<p>5. Open your bot in Telegramm and run the code.</p>
