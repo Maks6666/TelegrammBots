@@ -4,7 +4,7 @@ from currency_converter import CurrencyConverter
 import sqlite3
 
 
-bot = telebot.TeleBot('6626420557:AAGcF2V2boqAoX_rm2fLjZcXUUDFbOMnIV8')
+bot = telebot.TeleBot('YOUR_TOKEN')
 
 user_data = {}
 # name = None
