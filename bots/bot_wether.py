@@ -1,3 +1,7 @@
+#Telegramm link to the bot: @TeleSynopticBot
+#Before code running remember to download next pictures: sun.png, rain.png, srain.png, cloudd.png and suncloud.png and save them to "bots" directory or any directory you like 
+#This bot is working without code running because of using PythonAnywhere platform
+
 import telebot
 import requests
 import json
@@ -16,12 +20,12 @@ user_id = None
 # print(f"Полный путь к изображению: {image_path}")
 
 
-bot = telebot.TeleBot('6542413942:AAEBvczPrvhb9nf4WPHZv2MGz3LNJ2tAWzY')
+bot = telebot.TeleBot('{here is a place for bot personal token}')
 # old API
 # API = '3d9de74844d28377e81415151cbe6a66'
 # New one
 API = '205e6505f3d8f5e88f7a402125d4e477'
-
+user_data = {}
 def get_user_db(user_id):
       return f"user_{user_id}.db"
 
@@ -30,8 +34,9 @@ def start(message):
     bot.send_message(message.chat.id, 'Hi! Glad to see you:) Just input city name and calm down:)')
     
     
-    global user_id
+    
     user_id = message.from_user.id
+      user_data[user_id] = {}
     db_name = get_user_db(user_id)
 
     conn = sqlite3.connect(db_name)
@@ -76,7 +81,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_weather(message):
- 
+        user_id = message.from_user.id
         city = message.text.strip().lower()
         res = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API}&units=metric')
         if res.status_code == 200: #if status is existing 
@@ -112,7 +117,7 @@ def get_weather(message):
             # image = 'sun.png' if clouds < 50 else 'cloudd.png'
 
             
-            file = open('bots/' + image, 'rb')
+            file = open(image, 'rb')
             bot.send_photo(message.chat.id, file)
             markup = telebot.types.InlineKeyboardMarkup()
             markup.add(telebot.types.InlineKeyboardButton("History", callback_data="weather_data"))
@@ -131,7 +136,9 @@ def get_weather(message):
 # info, which button returnes
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
-        if call.data == 'weather_data':
+
+      user_id = call.from_user.id  
+      if call.data == 'weather_data':
             conn = sqlite3.connect(get_user_db(user_id))
             cur = conn.cursor()
 
@@ -151,7 +158,7 @@ def callback(call):
             markup.add(telebot.types.InlineKeyboardButton("Clear history", callback_data="clear_database"))
             bot.send_message(call.message.chat.id, info, reply_markup=markup)
         
-        elif call.data == 'clear_database':
+      elif call.data == 'clear_database':
                 conn = sqlite3.connect(get_user_db(user_id))
                 cur = conn.cursor()
 
@@ -163,5 +170,6 @@ def callback(call):
                 conn.close()
 
                 bot.send_message(call.message.chat.id, "History is cleared. Continue please😁")
-bot.polling(none_stop=True)
+#to prevent timeout issue
+bot.polling(interval=5)
 
